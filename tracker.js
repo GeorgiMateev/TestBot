@@ -1,8 +1,8 @@
 (function () {
     var eventsSettings = {
         events: ['click'],
-        batchSize: 10;
-        serverUrl: 'testserver.com/api/';
+        batchSize: 10,
+        serverUrl: 'http://testserver.com/api'
     };
 
     var internalApi = (function (settings) {
@@ -10,17 +10,16 @@
 
         function getSelectorForElement (node) {
             var path;
-            while (node.length) {
+            while (node) {
                 var name = node.localName;
                 if (!name) break;
                 name = name.toLowerCase();
 
                 var parent = node.parentNode;
 
-                var sameTagSiblings = parent.childNodes;
-                if (sameTagSiblings.length > 1) { 
-                    allSiblings = parent.children();
-                    var index = allSiblings.indexOf(node) + 1;
+                var siblings = parent.childNodes;
+                if (siblings.length > 1) {
+                    var index = Array.prototype.indexOf.call(siblings, node) + 1;
                     if (index > 1) {
                         name += ':nth-child(' + index + ')';
                     }
@@ -34,7 +33,7 @@
         }
 
         function sendEvents () {
-            var endpoint = settings.serverUrl + 'events';
+            var endpoint = settings.serverUrl + '/events';
 
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.open("POST", endpoint, true);
@@ -63,11 +62,11 @@
         };    
     })(eventsSettings);    
 
-    for (var i = 0; i < settings.events.length; i++) {
-        var listenTo = settings.events[i];
+    for (var i = 0; i < eventsSettings.events.length; i++) {
+        var listenTo = eventsSettings.events[i];
 
-        document.addEventListener(listenTo, function () {
-            internalApi.recordEvent(listenTo, this, Date.now());
+        document.addEventListener(listenTo, function (e) {
+            internalApi.recordEvent(listenTo, e.target, Date.now());
         }, true); 
     };
 })();
