@@ -1,8 +1,8 @@
 (function () {
     var eventsSettings = {
         events: ['click'],
-        batchSize: 10,
-        serverUrl: 'http://testserver.com/api'
+        batchSize: 3,
+        serverUrl: 'http://localhost:8080/api'
     };
 
     var internalApi = (function (settings) {
@@ -40,8 +40,8 @@
 
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.open("POST", endpoint, true);
-            xmlhttp.submittedData = eventsBuffer;
-            xmlhttp.send();
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xmlhttp.send(JSON.stringify(eventsBuffer));
         }
 
         function recordEvent (eventName, target, timeStamp) {
