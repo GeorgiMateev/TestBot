@@ -12,12 +12,15 @@
             var path;
             while (node) {
                 var name = node.localName;
-                if (!name) break;
+                if (!name || name === 'body') break;
                 name = name.toLowerCase();
 
                 var parent = node.parentNode;
 
-                var siblings = parent.childNodes;
+                var siblings = Array.prototype.filter.call(parent.childNodes, function (node) {
+                    return node.nodeType === 1;
+                });
+
                 if (siblings.length > 1) {
                     var index = Array.prototype.indexOf.call(siblings, node) + 1;
                     if (index > 1) {
