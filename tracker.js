@@ -13,27 +13,41 @@
             var path;
             while (node) {
                 var name = node.localName;
+
                 if (!name || name === 'body') break;
-                name = name.toLowerCase();
 
                 var parent = node.parentNode;
 
-                var siblings = Array.prototype.filter.call(parent.childNodes, function (node) {
-                    return node.nodeType === 1;
-                });
-
-                if (siblings.length > 1) {
-                    var index = Array.prototype.indexOf.call(siblings, node) + 1;
-                    if (index > 1) {
-                        name += ':nth-child(' + index + ')';
-                    }
-                }
+                name = getChildSelector(parent, node);
 
                 path = name + (path ? '>' + path : '');
                 node = parent;
             }
 
             return path;
+        }
+
+        function getChildSelector (parentNode, childNode) {
+            if(!childNode || !childNode.localName) return;
+
+            var name = childNode.localName.toLowerCase();
+
+            var siblings = Array.prototype.filter.call(parentNode.childNodes, function (node) {
+                return node.nodeType === 1;
+            });
+
+            var sameTagSiblings = Array.prototype.filter.call(parentNode.childNodes, function (node) {
+                return node.nodeType === 1 && node.localName === name;
+            });
+
+            if (sameTagSiblings.length > 1) {
+                var index = Array.prototype.indexOf.call(siblings, childNode) + 1;
+                if (index > 1) {
+                    name = ':nth-child(' + index + ')';
+                }
+            }
+
+            return name;
         }
 
         function recordEvent (eventName, target, timeStamp) {
@@ -53,9 +67,11 @@
                 if (addedNode.nodeType !== 1 || addedNode.localName === 'script') continue;
 
                 var targetSelector = getSelectorForElement(mutation.target);
+                var childSelector = getChildSelector(mutation.target, addedNode);
+
                 var addedSelector = targetSelector ?
-                    targetSelector + '>' + addedNode.localName :
-                    addedNode.localName;
+                    targetSelector + '>' + childSelector :
+                    childSelector;
 
                 mutationsBuffer.push({
                     type: 'added',
@@ -71,9 +87,11 @@
                 if (removedNode.nodeType !== 1 || removedNode.localName === 'script') continue;
 
                 var targetSelector = getSelectorForElement(mutation.target);
+                var childSelector = getChildSelector(mutation.target, removedNode);
+
                 var removedSelector = targetSelector ?
-                    targetSelector + '>' + removedNode.localName :
-                    removedNode.localName;
+                    targetSelector + '>' + childSelector :
+                    childSelector;
 
                 mutationsBuffer.push({
                     type: 'removed',
@@ -122,9 +140,11 @@
     };
 
     var observer = new MutationObserver(function (mutations) {
+        var timeStamp = Date.now();
+
         for(var i = 0; i < mutations.length; i++) {
             var mutation = mutations[i];
-            internalApi.mutationTypes[mutation.type](mutation, Date.now());
+            internalApi.mutationTypes[mutation.type](mutation, timeStamp);
         }
 
         internalApi.sendData();
