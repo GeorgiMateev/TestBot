@@ -50,10 +50,12 @@
             for (var i = 0; i < mutation.addedNodes.length; i++) {
                 var addedNode = mutation.addedNodes[i];
                 //process only elements for now
-                if (addedNode.nodeType !== 1) continue;
+                if (addedNode.nodeType !== 1 || addedNode.localName === 'script') continue;
 
                 var targetSelector = getSelectorForElement(mutation.target);
-                var addedSelector = targetSelector + '>' + addedNode.localName;
+                var addedSelector = targetSelector ?
+                    targetSelector + '>' + addedNode.localName :
+                    addedNode.localName;
 
                 mutationsBuffer.push({
                     type: 'added',
@@ -66,10 +68,12 @@
             for (var i = 0; i < mutation.removedNodes.length; i++) {
                 var removedNode = mutation.removedNodes[i];
                 //process only elements for now
-                if (removedNode.nodeType !== 1) continue;
+                if (removedNode.nodeType !== 1 || removedNode.localName === 'script') continue;
 
                 var targetSelector = getSelectorForElement(mutation.target);
-                var removedSelector = targetSelector + '>' + removedNode.localName;
+                var removedSelector = targetSelector ?
+                    targetSelector + '>' + removedNode.localName :
+                    removedNode.localName;
 
                 mutationsBuffer.push({
                     type: 'removed',
@@ -81,6 +85,8 @@
         }
 
         function sendData () {
+            if (mutationsBuffer.length === 0) return;
+
             var endpoint = settings.serverUrl + '/data';
 
             var xmlhttp = new XMLHttpRequest();
