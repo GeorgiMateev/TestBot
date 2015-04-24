@@ -47,6 +47,17 @@
                 }
             }
 
+            var idSelector = childNode.getAttribute('id');
+            var classes = childNode.getAttribute('class');
+            var classSelector = classes ? classes.replace(' ', '.') : '';
+
+            if (idSelector) {
+                name += '#' + idSelector;
+            }
+            else if (classSelector) {
+                name += '.' + classSelector;
+            }
+
             return name;
         }
 
