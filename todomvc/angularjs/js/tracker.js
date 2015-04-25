@@ -73,50 +73,37 @@
             });
         }
 
+        function recordChildListMutationNodes (target, nodes, type, timeStamp) {
+            for (var i = 0; i < nodes.length; i++) {
+                var node = nodes[i];
+                //process only elements for now
+                if (node.nodeType !== 1 ||
+                    node.localName === 'script' ||
+                    node.localName === 'style') continue;
+
+                var targetSelector = getSelectorForElement(target);
+                var childSelector = getChildSelector(target, node);
+
+                var mutationSelector = targetSelector ?
+                    targetSelector + '>' + childSelector :
+                    childSelector;
+
+                // the area around the mutation, helps for visualization of the problematic part of the page
+                var surroundingHtml = target.outerHTML;
+
+                mutationsBuffer.push({
+                    type: type,
+                    childSelector: mutationSelector,
+                    targetSelector: targetSelector,
+                    surroundingHtml: surroundingHtml,
+                    timeStamp: timeStamp
+                });
+            };
+        }
+
         function recordChildListMutation (mutation, timeStamp) {
-            for (var i = 0; i < mutation.addedNodes.length; i++) {
-                var addedNode = mutation.addedNodes[i];
-                //process only elements for now
-                if (addedNode.nodeType !== 1 ||
-                    addedNode.localName === 'script' ||
-                    addedNode.localName === 'style') continue;
-
-                var targetSelector = getSelectorForElement(mutation.target);
-                var childSelector = getChildSelector(mutation.target, addedNode);
-
-                var addedSelector = targetSelector ?
-                    targetSelector + '>' + childSelector :
-                    childSelector;
-
-                mutationsBuffer.push({
-                    type: 'added',
-                    childSelector: addedSelector,
-                    targetSelector: targetSelector,
-                    timeStamp: timeStamp
-                });
-            };
-
-            for (var i = 0; i < mutation.removedNodes.length; i++) {
-                var removedNode = mutation.removedNodes[i];
-                //process only elements for now
-                if (removedNode.nodeType !== 1 ||
-                    removedNode.localName === 'script' ||
-                    removedNode.localName === 'style') continue;
-
-                var targetSelector = getSelectorForElement(mutation.target);
-                var childSelector = getChildSelector(mutation.target, removedNode);
-
-                var removedSelector = targetSelector ?
-                    targetSelector + '>' + childSelector :
-                    childSelector;
-
-                mutationsBuffer.push({
-                    type: 'removed',
-                    childSelector: removedSelector,
-                    targetSelector: targetSelector,
-                    timeStamp: timeStamp
-                });
-            };
+            recordChildListMutationNodes(mutation.target, mutation.addedNodes, 'added', timeStamp);
+            recordChildListMutationNodes(mutation.target, mutation.removedNodes, 'removed', timeStamp);
         }
 
         function sendData () {

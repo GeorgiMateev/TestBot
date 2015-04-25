@@ -39,7 +39,7 @@ angular.module('todomvc')
 				return;
 			}
 
-			$scope.saving = true;
+			$scope.saving = true; //return;
 			store.insert(newTodo)
 				.then(function success() {
 					$scope.newTodo = '';
