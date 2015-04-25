@@ -32,6 +32,7 @@ class Database {
 		
 		this.db = mongoClient.getDB("testbot");
 		this.eventsCollection = db.getCollection("events");
+		this.resultsCollection = db.getCollection("results");
 	}
 
 	public void insertEvents(List<EventViewModel> events, List<EventViewModel> mutations, long timeStamp) {
@@ -86,7 +87,27 @@ class Database {
 				.sort(new BasicDBObject("timeStamp", 1));
 	}
 	
-	public void saveErrorReport(String selector, String parentHtml, String type) {
+	public Object createRun(long timeStamp) {
+		BasicDBObject run = (new BasicDBObject("timeStamp", timeStamp))
+			.append("issues", new BasicDBList());
+		
+		this.resultsCollection.insert(run);
+		
+		return run.get("_id");
+	}
+	
+	public void saveErrorReport(Object runId, String selector, String expectedParentHtml, String actualParentHtml, String type, long timeStamp) {		
+		
+		BasicDBObject issue = (new BasicDBObject())
+				.append("selector", selector)
+				.append("expectedParentHtml", expectedParentHtml)
+				.append("actualParentHtml", actualParentHtml)
+				.append("type", type)
+				.append("timeStamp", timeStamp);
+		
+		this.resultsCollection.update(new BasicDBObject("_id", runId),
+				new BasicDBObject("$push",
+						new BasicDBObject("issues", issue)));
 		
 	}
 
@@ -96,4 +117,5 @@ class Database {
 	
 	private DB db;
 	private DBCollection eventsCollection;
+	private DBCollection resultsCollection;
 }

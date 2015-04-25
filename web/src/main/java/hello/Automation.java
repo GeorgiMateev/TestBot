@@ -33,6 +33,8 @@ public class Automation {
 		
 		DBCursor events = db.GetEvents();
 		
+		Object runId = db.createRun(System.currentTimeMillis() / 1000L);
+		
 		FirefoxProfile profile = new FirefoxProfile();
 		profile.setPreference("general.useragent.override", "TestBot");
 		
@@ -85,7 +87,7 @@ public class Automation {
         			String targetSelector = (String)mutation.get("targetSelector");
         			WebElement targetElement = driver.findElement(By.cssSelector(targetSelector));
         			String html = targetElement.getAttribute("outerHTML");
-        			db.saveErrorReport(childSelector, html, type);
+        			db.saveErrorReport(runId, childSelector, "", html, type, (long)mutation.get("timeStamp"));
         		}
         	}
 		}
