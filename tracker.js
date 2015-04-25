@@ -51,7 +51,7 @@
 
             var idSelector = childNode.getAttribute('id');
             var classes = childNode.getAttribute('class');
-            var classSelector = classes ? classes.replace(' ', '.') : '';
+            var classSelector = classes ? classes.replace(/\s/g, '.') : '';
 
             if (idSelector) {
                 name += '#' + idSelector;

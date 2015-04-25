@@ -82,7 +82,7 @@ class Database {
 	
 	public DBCursor GetEvents() {
 		return this.eventsCollection
-				.find(new BasicDBObject("mutations.type", "added"))
+				.find()
 				.sort(new BasicDBObject("timeStamp", 1));
 	}
 	
