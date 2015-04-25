@@ -30,8 +30,32 @@ class Database {
 			e.printStackTrace();
 		}
 		
-		this.db = mongoClient.getDB( "testbot" );
+		this.db = mongoClient.getDB("testbot");
 		this.eventsCollection = db.getCollection("events");
+	}
+
+	public void insertEvents(List<EventViewModel> events, List<EventViewModel> mutations) {
+		BasicDBList eventsForDB = new BasicDBList();
+		for (EventViewModel event : events) {
+			eventsForDB.add(new BasicDBObject()
+					.append("targetSelector", event.getTargetSelector())
+					.append("type", event.getType())
+					.append("timeStamp", event.getTimeStamp()));
+		}
+
+		BasicDBList mutationsForDb = new BasicDBList();
+		for (EventViewModel mutation : mutations) {
+			String targetSelector = mutation.getTargetSelector() != null ? mutation.getTargetSelector() : "html>body";
+			mutationsForDb.add(new BasicDBObject()
+					.append("targetSelector", targetSelector)
+					.append("addedSelector", mutation.getChildSelector())
+					.append("type", mutation.getType())
+					.append("timeStamp", mutation.getTimeStamp()));
+		}
+
+		this.eventsCollection.insert(new BasicDBObject()
+				.append("events", eventsForDB)
+				.append("mutations", mutationsForDb));
 	}
 	
 	public void addDummyData() {
