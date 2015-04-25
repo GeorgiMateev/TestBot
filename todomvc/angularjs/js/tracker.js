@@ -2,7 +2,7 @@
     var eventsSettings = {
         events: ['click'],
         batchSize: 3,
-        serverUrl: 'http://localhost:8080/api'
+        serverUrl: 'http://localhost:8080'
     };
 
     var internalApi = (function (settings) {
@@ -66,7 +66,7 @@
 
             eventsBuffer.push({
                 targetSelector: selector,
-                eventName: eventName,
+                type: eventName,
                 timeStamp: timeStamp
             });
         }
@@ -86,7 +86,7 @@
 
                 mutationsBuffer.push({
                     type: 'added',
-                    addedSelector: addedSelector,
+                    childSelector: addedSelector,
                     targetSelector: targetSelector,
                     timeStamp: timeStamp
                 });
@@ -106,7 +106,7 @@
 
                 mutationsBuffer.push({
                     type: 'removed',
-                    removedSelector: removedSelector,
+                    childSelector: removedSelector,
                     targetSelector: targetSelector,
                     timeStamp: timeStamp
                 });

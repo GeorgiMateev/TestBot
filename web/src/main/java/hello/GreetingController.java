@@ -2,6 +2,8 @@ package hello;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +25,12 @@ public class GreetingController {
     }
     
     @RequestMapping(value = "/data", method = RequestMethod.POST)
-    public void data(UsageViewModel data) {
-
+    public void data(UsageViewModel data, HttpServletResponse  response) {
+    }
+    
+    @RequestMapping("/automate")
+    public void automate() {
+    	Automation a = new Automation();
+    	a.start();
     }
 }
