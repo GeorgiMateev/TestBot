@@ -75,7 +75,9 @@
             for (var i = 0; i < mutation.addedNodes.length; i++) {
                 var addedNode = mutation.addedNodes[i];
                 //process only elements for now
-                if (addedNode.nodeType !== 1 || addedNode.localName === 'script') continue;
+                if (addedNode.nodeType !== 1 ||
+                    addedNode.localName === 'script' ||
+                    addedNode.localName === 'style') continue;
 
                 var targetSelector = getSelectorForElement(mutation.target);
                 var childSelector = getChildSelector(mutation.target, addedNode);
@@ -95,7 +97,9 @@
             for (var i = 0; i < mutation.removedNodes.length; i++) {
                 var removedNode = mutation.removedNodes[i];
                 //process only elements for now
-                if (removedNode.nodeType !== 1 || removedNode.localName === 'script') continue;
+                if (removedNode.nodeType !== 1 ||
+                    removedNode.localName === 'script' ||
+                    removedNode.localName === 'style') continue;
 
                 var targetSelector = getSelectorForElement(mutation.target);
                 var childSelector = getChildSelector(mutation.target, removedNode);
@@ -123,7 +127,8 @@
             xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xmlhttp.send(JSON.stringify({
                 events: eventsBuffer,
-                mutations: mutationsBuffer
+                mutations: mutationsBuffer,
+                timeStamp: Date.now()
             }));
             xmlhttp.onreadystatechange = function() {
                 if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -142,13 +147,27 @@
         };
     })(eventsSettings);
 
-    for (var i = 0; i < eventsSettings.events.length; i++) {
-        var listenTo = eventsSettings.events[i];
+    // for (var i = 0; i < eventsSettings.events.length; i++) {
+    //     var listenTo = eventsSettings.events[i];
 
-        document.addEventListener(listenTo, function (e) {
-            internalApi.recordEvent(listenTo, e.target, Date.now());
-        }, true); 
-    };
+    //     document.addEventListener(listenTo, function (e) {
+    //         internalApi.recordEvent(listenTo, e.target, Date.now());
+    //     }, true); 
+    // };
+    
+    document.addEventListener('click', function (e) {
+        internalApi.recordEvent('click', e.target, Date.now());
+    }, true);
+
+    document.addEventListener('keypress', function (e) {
+        var currentFocus = e.target;
+        if (currentFocus.localName === 'input' &&
+            currentFocus.type === 'text' &&
+            currentFocus.value &&
+            e.keyCode === 13) { //enter
+            internalApi.recordEvent('enter', e.target, Date.now());
+        }        
+    }, true);
 
     var observer = new MutationObserver(function (mutations) {
         var timeStamp = Date.now();

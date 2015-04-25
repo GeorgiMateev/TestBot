@@ -34,7 +34,7 @@ class Database {
 		this.eventsCollection = db.getCollection("events");
 	}
 
-	public void insertEvents(List<EventViewModel> events, List<EventViewModel> mutations) {
+	public void insertEvents(List<EventViewModel> events, List<EventViewModel> mutations, long timeStamp) {
 		BasicDBList eventsForDB = new BasicDBList();
 		for (EventViewModel event : events) {
 			eventsForDB.add(new BasicDBObject()
@@ -48,14 +48,15 @@ class Database {
 			String targetSelector = mutation.getTargetSelector() != null ? mutation.getTargetSelector() : "html>body";
 			mutationsForDb.add(new BasicDBObject()
 					.append("targetSelector", targetSelector)
-					.append("addedSelector", mutation.getChildSelector())
+					.append("childSelector", mutation.getChildSelector())
 					.append("type", mutation.getType())
 					.append("timeStamp", mutation.getTimeStamp()));
 		}
 
 		this.eventsCollection.insert(new BasicDBObject()
 				.append("events", eventsForDB)
-				.append("mutations", mutationsForDb));
+				.append("mutations", mutationsForDb)
+				.append("timeStamp", timeStamp));
 	}
 	
 	public void addDummyData() {
@@ -80,9 +81,9 @@ class Database {
 	}
 	
 	public DBCursor GetEvents() {
-		return this.eventsCollection.find(new BasicDBObject("mutations.type", "added"),
-				(new BasicDBObject())
-				.append("sort", new BasicDBObject("mutations", 1)));
+		return this.eventsCollection
+				.find(new BasicDBObject("mutations.type", "added"))
+				.sort(new BasicDBObject("timeStamp", 1));
 	}
 	
 	public void saveErrorReport(String selector, String parentHtml, String type) {

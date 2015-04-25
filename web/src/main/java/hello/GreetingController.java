@@ -29,7 +29,7 @@ public class GreetingController {
     
     @RequestMapping(value = "/data", method = RequestMethod.POST, consumes="application/json")
     public void data(@RequestBody UsageViewModel data, HttpServletResponse  response) {
-        db.insertEvents(data.getEvents(), data.getMutations());
+        db.insertEvents(data.getEvents(), data.getMutations(), data.getTimeStamp());
     }
     
     @RequestMapping("/automate")

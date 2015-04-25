@@ -6,10 +6,6 @@ var app = express();
 var staticPath = path.resolve(__dirname);
 app.use(express.static(staticPath));
 
-app.post('/api/data', function (req, res, next) {
-    res.send(true);
-});
-
 app.listen(8081, function() {
   console.log('listening');
 });

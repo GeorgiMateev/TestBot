@@ -41,14 +41,21 @@ public class Automation {
         		DBObject userEvent = (DBObject) userEvents.get(i);
         		
         		WebElement element = driver.findElement(By.cssSelector((String)userEvent.get("targetSelector")));
+        		
+        		String eventType = (String)userEvent.get("type");
+        		
         		String tagName =  element.getTagName();
         		String type = element.getAttribute("type");
-        		if (tagName == "input" && type == "text") {
-        			element.click();
-        	        element.sendKeys("Test data");
-        	        element.sendKeys(Keys.ENTER);
-				}
-        		else {
+        		
+        		if ("enter".equals(eventType)) {
+        			if ("input".equals(tagName) && "text".equals(type)) {
+            			element.click();
+            	        element.sendKeys("Test data");
+            	        element.sendKeys(Keys.ENTER);
+    				}
+        		}
+        		
+        		if ("click".equals(eventType)) {
         			element.click();
         		}
         	}
@@ -58,7 +65,7 @@ public class Automation {
         		DBObject mutation = (DBObject) mutations.get(i);
         		
         		String type = (String)mutation.get("type");
-        		if(type != "added") {
+        		if(!"added".equals(type)) {
         			continue;
         		}
         		
