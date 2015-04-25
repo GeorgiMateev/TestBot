@@ -1,0 +1,19 @@
+/*div.tests-result {
+  transition:visibility 0s linear 0.5s,opacity 0.5s linear;
+}*/
+
+div.tests-result[data-available="none"] {
+/*  visibility: hidden;
+  opacity:0;
+*/  display: none;
+}
+
+div.tests-result[data-avalable="true"] {
+/*  opacity:1;
+  visibility: visible;
+  transition-delay: 0s;
+*/}
+
+.loading-indicator {
+  display: none;
+}

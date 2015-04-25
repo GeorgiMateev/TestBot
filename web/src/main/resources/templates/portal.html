@@ -1,11 +1,65 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <script type="text/javascript" src="app.js"></script>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+  <script src="chart.js"></script>
+  
+  <link rel="stylesheet" href="style.css"></link>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+  <script type="text/javascript" src="app.js"></script>
 </head>
 <body>
-<p th:text="'Hello, ' + ${name} + '!'" />
+
+<div class="container">
+  <div class="jumbotron">
+    <h1>Regression Testing Dashboard</h1>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <h3>Schedule test</h3>
+      <button type="button" class="start-testing btn btn-success">Start testing!</button>
+      <img class="loading-indicator" src="loading.gif"></img>
+    </div>
+    <div class="col-sm-12 tests-result" data-available="none">
+      <h3>Test results</h3>
+    </div>
+    <div class="col-sm-6 tests-result" data-available="none">
+      <h3>Expected</h3>
+      <ol>
+        <li>
+          <xmp><ul><li>Content1</li><li>Content2</li></ul></xmp>
+        </li>
+        <li>
+          <xmp><ul><li>Content1</li><li>Content2</li></ul></xmp>
+        </li>
+      </ol>
+    </div>
+    <div class="col-sm-6 tests-result" data-available="none">
+      <h3>Was</h3>
+      <ol>
+        <li>
+          <xmp><ul><li>Content1</li></ul></xmp>
+        </li>
+        <li>
+          <xmp><ul><li>Content1</li></ul></xmp>
+        </li>
+      </ol>
+    </div>
+    <div class="col-sm-12">
+      <h3>Statistics</h3>        
+      <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
