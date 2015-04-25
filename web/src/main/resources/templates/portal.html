@@ -1,6 +1,5 @@
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Bootstrap Example</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"></link>
@@ -44,20 +43,25 @@
         </li>
       </ol>
     </div>
-    <div class="col-sm-6 tests-result" data-available="none">
-      <h3>Was</h3>
-      <ol>
-        <li>
-          <xmp><ul><li>Content1</li></ul></xmp>
-        </li>
-        <li>
-          <xmp><ul><li>Content1</li></ul></xmp>
-        </li>
-      </ol>
+    <div class="col-sm-12" th:if="${runs != null}">
+      <h1>Previous runs</h1>
+      <div class="previous-runs" th:each="run : ${runs}">
+        <label th:text="${run.timeStamp}"></label>
+        <ul>
+          <!--<th:block th:object="${run}">-->
+            <li th:each="item : *{run.issues}">
+              <label>Expected</label>
+              <code th:text="${item.expectedParentHtml}"></code>
+              <label>Was</label>
+              <code th:text="${item.actualParentHtml}"></code>
+            </li>
+          <!--</th:block>-->
+        </ul>
+      </div>
     </div>
     <div class="col-sm-12">
       <h3>Statistics</h3>        
-      <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      <div id="chart-container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </div>
   </div>
 </div>

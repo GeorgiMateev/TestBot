@@ -89,6 +89,10 @@ class Database {
 	public void saveErrorReport(String selector, String parentHtml, String type) {
 		
 	}
+
+//	public DBCursor getResults() {
+//		return this.results.find();
+//	}
 	
 	private DB db;
 	private DBCollection eventsCollection;
