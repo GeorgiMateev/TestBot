@@ -14,6 +14,7 @@ import com.mongodb.ParallelScanOptions;
 import com.mongodb.ServerAddress;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -37,13 +38,13 @@ class Database {
 		BasicDBList localEvents = new BasicDBList();
 		localEvents.add(new BasicDBObject()
 			.append("targetSelector", "ng-view>section>header>form>input")
-			.append("eventName", "click")
+			.append("type", "click")
 			.append("timeStamp", "1429765607219"));
 		
 		BasicDBList localMutations = new BasicDBList();
 		localMutations.add(new BasicDBObject()
 			.append("targetSelector", "ng-view>section>section>ul")
-			.append("addedSelector", "ng-view>section>section>ul>li")
+			.append("childSelector", "ng-view>section>section>ul>li")
 			.append("type", "added")
 			.append("timeStamp", "1429765613290"));
 		
@@ -52,6 +53,16 @@ class Database {
 			.append("mutations", localMutations);
 		
 		this.eventsCollection.insert(entry);
+	}
+	
+	public DBCursor GetEvents() {
+		return this.eventsCollection.find(new BasicDBObject("mutations.type", "added"),
+				(new BasicDBObject())
+				.append("sort", new BasicDBObject("mutations", 1)));
+	}
+	
+	public void saveErrorReport(String selector, String parentHtml, String type) {
+		
 	}
 	
 	private DB db;
