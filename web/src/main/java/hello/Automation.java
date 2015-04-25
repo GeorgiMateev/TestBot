@@ -32,7 +32,10 @@ public class Automation {
 		
 		DBCursor events = db.GetEvents();
 		
-        WebDriver driver = new FirefoxDriver();
+		FirefoxProfile profile = new FirefoxProfile();
+		profile.setPreference("general.useragent.override", "TestBot");
+		
+        WebDriver driver = new FirefoxDriver(profile);
         driver.get("http://localhost:8081");
         
         for (DBObject event : events) {

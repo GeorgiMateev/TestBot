@@ -1,4 +1,6 @@
 (function () {
+    if (navigator.userAgent === 'TestBot') return;
+
     var eventsSettings = {
         events: ['click'],
         batchSize: 3,
