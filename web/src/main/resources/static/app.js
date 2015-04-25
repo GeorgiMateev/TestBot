@@ -17,8 +17,22 @@
     });
   }
 
+  var fulfillChart = function() {
+    var runs = $('.previous-runs');
+    var numberOfRuns = runs.length;
+    var warningsByRun = [];
+    runs.each(function(indx) {
+      var list = runs[indx].getElementsByTagName('ul')[0];
+      warningsByRun.push(list.children.length);
+    });
+
+    createChart(numberOfRuns, warningsByRun)
+  };
+
   $(document).ready(function() {
     var testingButton = $('button.start-testing');
     testingButton.click(startTesting);
+
+//    fulfillChart();
   });
 }());

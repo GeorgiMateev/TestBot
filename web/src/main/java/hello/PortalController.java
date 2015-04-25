@@ -9,11 +9,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class PortalController {
+    private Database db = new Database();
+
     @RequestMapping("/portal")
     public String greeting(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
+        ArrayList<IssueDiff> list = new ArrayList<>();
+
+        List<RunResult> runs = db.getResults();
+        model.addAttribute("runs", runs);
         return "portal";
     }
 }

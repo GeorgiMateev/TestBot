@@ -61,28 +61,7 @@ class Database {
 				.append("mutations", mutationsForDb)
 				.append("timeStamp", timeStamp));
 	}
-	
-	public void addDummyData() {
-		BasicDBList localEvents = new BasicDBList();
-		localEvents.add(new BasicDBObject()
-			.append("targetSelector", "ng-view>section>header>form>input")
-			.append("type", "click")
-			.append("timeStamp", "1429765607219"));
-		
-		BasicDBList localMutations = new BasicDBList();
-		localMutations.add(new BasicDBObject()
-			.append("targetSelector", "ng-view>section>section>ul")
-			.append("childSelector", "ng-view>section>section>ul>li")
-			.append("type", "added")
-			.append("timeStamp", "1429765613290"));
-		
-		BasicDBObject entry = new BasicDBObject()
-			.append("events", localEvents)
-			.append("mutations", localMutations);
-		
-		this.eventsCollection.insert(entry);
-	}
-	
+
 	public DBCursor GetEvents() {
 		return this.eventsCollection
 				.find()
@@ -110,7 +89,36 @@ class Database {
 		this.resultsCollection.update(new BasicDBObject("_id", runId),
 				new BasicDBObject("$push",
 						new BasicDBObject("issues", issue)));
-		
+	}
+
+	public List<RunResult> getResults() {
+		ArrayList<RunResult> results = new ArrayList<>();
+		DBCursor cursor = this.resultsCollection.find();
+		for (DBObject run : cursor) {
+			RunResult runResult = new RunResult();
+			BasicDBList issues = (BasicDBList) run.get("issues");
+			runResult.setIssues(this.extractIssues(issues));
+			runResult.setStatus(run.get("status").toString());
+			runResult.setTimeStamp(Long.parseLong(run.get("timeStamp").toString()));
+			results.add(runResult);
+		}
+		return results;
+	}
+
+	private ArrayList<IssueDiff> extractIssues(BasicDBList issues) {
+		ArrayList<IssueDiff> issueDiffs = new ArrayList<>();
+		for (Object issue : issues) {
+			DBObject dbIssue = (DBObject) issue;
+			IssueDiff issueDiff = new IssueDiff();
+			issueDiff.setExpectedParentHtml(dbIssue.get("expectedParentHtml").toString());
+			issueDiff.setActualParentHtml(dbIssue.get("actualParentHtml").toString());
+			issueDiff.setTarget(dbIssue.get("selector").toString());
+			issueDiff.setType(dbIssue.get("type").toString());
+			issueDiff.setTimeStamp(Long.parseLong(dbIssue.get("timeStamp").toString()));
+			issueDiffs.add(issueDiff);
+		}
+
+		return issueDiffs;
 	}
 	
 	private DB db;
