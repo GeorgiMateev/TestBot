@@ -15,12 +15,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Automation {
 	public void start() {
-		File pathToBinary = new File("D:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
-		FirefoxBinary ffBinary = new FirefoxBinary(pathToBinary);
-		FirefoxProfile firefoxProfile = new FirefoxProfile();
-		FirefoxDriver driver = new FirefoxDriver(ffBinary,firefoxProfile);
+//		File pathToBinary = new File("D:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
+//		FirefoxBinary ffBinary = new FirefoxBinary(pathToBinary);
+//		FirefoxProfile firefoxProfile = new FirefoxProfile();
+//		FirefoxDriver driver = new FirefoxDriver(ffBinary,firefoxProfile);
 		
-        //WebDriver driver = new FirefoxDriver();
+        WebDriver driver = new FirefoxDriver();
         driver.get("http://localhost:8081");
         
         
@@ -36,7 +36,12 @@ public class Automation {
         
         (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
-                return d.findElement(By.cssSelector("ng-view.ng-scope>section#todoapp>section#main>ul#todo-list>li.ng-scope")) != null;
+                Boolean found = d.findElement(By.cssSelector("ng-view.ng-scope>section#todoapp>section#main>ul#todo-list>li.ng-scope")) != null;
+                if (found) {
+                	System.out.print("Css selector found");
+                }
+                
+                return found;
             }
         });
 
