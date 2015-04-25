@@ -4,17 +4,17 @@ import java.util.List;
 
 public class UsageViewModel {
 	private List<EventViewModel> events;
-	private List<EventViewModel> mutation;
+	private List<EventViewModel> mutations;
 	public List<EventViewModel> getEvents() {
 		return events;
 	}
 	public void setEvents(List<EventViewModel> events) {
 		this.events = events;
 	}
-	public List<EventViewModel> getMutation() {
-		return mutation;
+	public List<EventViewModel> getMutations() {
+		return mutations;
 	}
-	public void setMutation(List<EventViewModel> mutation) {
-		this.mutation = mutation;
+	public void setMutations(List<EventViewModel> mutations) {
+		this.mutations = mutations;
 	}
 }

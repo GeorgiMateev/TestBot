@@ -1,10 +1,13 @@
 package hello;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,8 +27,9 @@ public class GreetingController {
                             String.format(template, name));
     }
     
-    @RequestMapping(value = "/data", method = RequestMethod.POST)
-    public void data(UsageViewModel data, HttpServletResponse  response) {
+    @RequestMapping(value = "/data", method = RequestMethod.POST, consumes="application/json")
+    public void data(@RequestBody UsageViewModel data, HttpServletResponse  response) {
+        db.insertEvents(data.getEvents(), data.getMutations());
     }
     
     @RequestMapping("/automate")
