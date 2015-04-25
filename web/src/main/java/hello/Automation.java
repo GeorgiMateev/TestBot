@@ -86,8 +86,9 @@ public class Automation {
         		catch(TimeoutException e){
         			String targetSelector = (String)mutation.get("targetSelector");
         			WebElement targetElement = driver.findElement(By.cssSelector(targetSelector));
+        			String expectedHtml = (String)mutation.get("surroundingHtml");
         			String html = targetElement.getAttribute("outerHTML");
-        			db.saveErrorReport(runId, childSelector, "", html, type, (long)mutation.get("timeStamp"));
+        			db.saveErrorReport(runId, childSelector, expectedHtml, html, type, (long)mutation.get("timeStamp"));
         		}
         	}
 		}

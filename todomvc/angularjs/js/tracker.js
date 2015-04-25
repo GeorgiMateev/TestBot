@@ -88,10 +88,14 @@
                     targetSelector + '>' + childSelector :
                     childSelector;
 
+                // the area around the mutation, helps for visualization of the problematic part of the page
+                var surroundingHtml = target.outerHTML;
+
                 mutationsBuffer.push({
                     type: type,
                     childSelector: mutationSelector,
                     targetSelector: targetSelector,
+                    surroundingHtml: surroundingHtml,
                     timeStamp: timeStamp
                 });
             };

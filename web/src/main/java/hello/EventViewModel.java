@@ -5,6 +5,8 @@ public class EventViewModel {
 	private String targetSelector;
 	private String childSelector;
 	private long timeStamp;
+	private String surroundingHtml;
+	
 	public String getType() {
 		return type;
 	}
@@ -28,6 +30,12 @@ public class EventViewModel {
 	}
 	public void setTimeStamp(long timeStamp) {
 		this.timeStamp = timeStamp;
+	}
+	public String getSurroundingHtml() {
+		return surroundingHtml;
+	}
+	public void setSurroundingHtml(String surroundingHtml) {
+		this.surroundingHtml = surroundingHtml;
 	}
 	
 }

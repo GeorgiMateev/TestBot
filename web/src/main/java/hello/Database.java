@@ -41,6 +41,7 @@ class Database {
 			eventsForDB.add(new BasicDBObject()
 					.append("targetSelector", event.getTargetSelector())
 					.append("type", event.getType())
+					.append("surroundingHtml", event.getSurroundingHtml())
 					.append("timeStamp", event.getTimeStamp()));
 		}
 
@@ -51,6 +52,7 @@ class Database {
 					.append("targetSelector", targetSelector)
 					.append("childSelector", mutation.getChildSelector())
 					.append("type", mutation.getType())
+					.append("surroundingHtml", mutation.getSurroundingHtml())
 					.append("timeStamp", mutation.getTimeStamp()));
 		}
 
