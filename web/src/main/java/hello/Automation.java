@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Iterator;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -37,6 +38,8 @@ public class Automation {
 		
         WebDriver driver = new FirefoxDriver(profile);
         driver.get("http://localhost:8081");
+        
+        ((JavascriptExecutor)driver).executeScript("window.focus();");
         
         for (DBObject event : events) {
         	BasicDBList userEvents = (BasicDBList)event.get("events");
