@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Iterator;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
@@ -70,16 +71,21 @@ public class Automation {
         		String tagName =  element.getTagName();
         		String type = element.getAttribute("type");
         		
-        		if ("enter".equals(eventType)) {
-        			if ("input".equals(tagName) && "text".equals(type)) {
-            			element.click();
-            	        element.sendKeys("Test data");
-            	        element.sendKeys(Keys.ENTER);
-    				}
+        		try {
+	        		if ("enter".equals(eventType)) {
+	        			if ("input".equals(tagName) && "text".equals(type)) {
+	            			element.click();
+	            	        element.sendKeys("Test data");
+	            	        element.sendKeys(Keys.ENTER);
+	    				}
+	        		}
+	        		
+	        		if ("click".equals(eventType)) {
+	        			element.click();
+	        		}
         		}
-        		
-        		if ("click".equals(eventType)) {
-        			element.click();
+        		catch(ElementNotVisibleException e) {
+        			
         		}
         	}
         	
