@@ -1,4 +1,9 @@
 .idea/
 .metadata/
 web/.idea/
+web/README.md~
+web/pom.xml~
+todomvc/angularjs/js/tracker.js
+web/.classpath
+web/.settings/org.eclipse.jdt.core.prefs
 
