@@ -1,7 +1,9 @@
 package hello;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,19 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GreetingController {
 
-    private void initializeDb() {
-        Object runId  = db.createRun(11111111);
-        db.saveErrorReport(runId, "<selector/>", "<expected />", "<was />", "type", 111111111);
-        db.saveErrorReport(runId, "<selector/>", "<expected />", "<was />", "type", 111111112);
-        db.saveErrorReport(runId, "<selector/>", "<expected />", "<was />", "type", 111111113);
-        db.saveErrorReport(runId, "<selector/>", "<expected />", "<was />", "type", 111111114);
-
-        Object runId2  = db.createRun(11111112);
-        db.saveErrorReport(runId2, "<selector/>", "<expected />", "<was />", "type", 111111111);
-        db.saveErrorReport(runId2, "<selector/>", "<expected />", "<was />", "type", 111111112);
-        db.saveErrorReport(runId2, "<selector/>", "<expected />", "<was />", "type", 111111113);
-        db.saveErrorReport(runId2, "<selector/>", "<expected />", "<was />", "type", 111111114);
-    }
     private Database db = new Database();
 
     @RequestMapping(value = "/data", method = RequestMethod.POST, consumes="application/json")
@@ -36,9 +25,10 @@ public class GreetingController {
     }
     
     @RequestMapping("/automate")
-    public void automate() {
+    public RunResult automate() {
     	Automation a = new Automation();
-    	a.start();
+        Object runId = a.start();
+        return db.getResultById(runId);
     }
 
     @RequestMapping(value = "/runs", method = RequestMethod.GET)
