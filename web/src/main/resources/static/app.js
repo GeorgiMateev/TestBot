@@ -33,8 +33,12 @@
     var runsPromise = $.ajax('http://localhost:8188/runs')
 
     var displayRun = function(run) {
-      // TODO: I need implementation - @Muri help me
-      console.log(run);
+      var issues = []
+      run.issues.forEach(function(issue) {
+        issues.push([issue.expectedParentHtml, issue.actualParentHtml])
+      })
+
+      drowResults(issues);
     };
 
     runsPromise
