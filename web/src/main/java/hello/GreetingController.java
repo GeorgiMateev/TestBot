@@ -15,6 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GreetingController {
 
+    private void initializeDb() {
+        Object runId  = db.createRun(11111111);
+        db.saveErrorReport(runId, "<selector/>", "<expected />", "<was />", "type", 111111111);
+        db.saveErrorReport(runId, "<selector/>", "<expected />", "<was />", "type", 111111112);
+        db.saveErrorReport(runId, "<selector/>", "<expected />", "<was />", "type", 111111113);
+        db.saveErrorReport(runId, "<selector/>", "<expected />", "<was />", "type", 111111114);
+
+        Object runId2  = db.createRun(11111112);
+        db.saveErrorReport(runId2, "<selector/>", "<expected />", "<was />", "type", 111111111);
+        db.saveErrorReport(runId2, "<selector/>", "<expected />", "<was />", "type", 111111112);
+        db.saveErrorReport(runId2, "<selector/>", "<expected />", "<was />", "type", 111111113);
+        db.saveErrorReport(runId2, "<selector/>", "<expected />", "<was />", "type", 111111114);
+    }
     private Database db = new Database();
 
     @RequestMapping(value = "/data", method = RequestMethod.POST, consumes="application/json")

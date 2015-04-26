@@ -29,11 +29,12 @@
     createChart(numberOfRuns, warningsByRun)
   };
 
-  var fulfillPreviousRuns = function () {
+  var fulfillRuns = function () {
     var runsPromise = $.ajax('http://localhost:8188/runs')
 
     var displayRun = function(run) {
-      // TODO: I need implementation - Muri help me
+      // TODO: I need implementation - @Muri help me
+      console.log(run);
     };
 
     runsPromise
@@ -46,6 +47,6 @@
     var testingButton = $('button.start-testing');
     testingButton.click(startTesting);
 
-//    fulfillChart();
+    fulfillRuns();
   });
 }());

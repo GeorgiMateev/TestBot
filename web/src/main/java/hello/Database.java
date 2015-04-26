@@ -98,7 +98,6 @@ class Database {
 			RunResult runResult = new RunResult();
 			BasicDBList issues = (BasicDBList) run.get("issues");
 			runResult.setIssues(this.extractIssues(issues));
-			runResult.setStatus(run.get("status").toString());
 			runResult.setTimeStamp(Long.parseLong(run.get("timeStamp").toString()));
 			results.add(runResult);
 		}
