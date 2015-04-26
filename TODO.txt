@@ -1,11 +1,9 @@
 dashboard page bootstrap design
 flash messages - started / finished
 more charts
-warnings panel
 -diffs
--embed in page
+-embed in page -> left and right
+
 labels for left right and result in warnings
-highlightjs
-style the diff
-choose which site to test
-endless testing...!
+previous runs / wars
+move warnings above charts

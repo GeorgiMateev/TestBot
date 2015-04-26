@@ -30,6 +30,9 @@
       <button id="start-testing-button" type="button" class="start-testing btn-lg btn btn-success">Start testing</button>
       <img class="loading-indicator" src="loading.gif"></img>
     </div>
+
+
+
     <div class="col-sm-12" th:if="${runs != null}">
       <h3>Previous runs</h3>
       <div class="previous-runs" th:each="run : ${runs}">
@@ -44,10 +47,7 @@
         </ul>
       </div>
     </div>
-    <div class="col-sm-12">
-      <h3>Statistics</h3>        
-      <div id="chart-container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    </div>
+
     <!-- Results from testing - warnings -->
     <div class="panel panel-default" style="margin-top:10px;">
       <div class="panel-heading">
@@ -55,7 +55,13 @@
       </div>
       <div id="results-panel" class="panel-body">
       </div>
-    </div>    
+    </div>   
+
+    <div class="col-sm-12">
+      <h3>Statistics</h3>        
+      <div id="chart-container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    </div>
+     
   </div>
 </div>
 <script type="text/javascript">
