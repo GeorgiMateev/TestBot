@@ -1,0 +1,11 @@
+dashboard page bootstrap design
+flash messages - started / finished
+more charts
+warnings panel
+-diffs
+-embed in page
+labels for left right and result in warnings
+highlightjs
+style the diff
+choose which site to test
+endless testing...!

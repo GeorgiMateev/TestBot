@@ -55,6 +55,14 @@ td {
 
 @-moz-document url-prefix() {
 	body {
-		height: 99%; /* Hide scroll bar in Firefox */
+		height: 99%; /*  Hide scroll bar in Firefox */
 	}
+}
+
+table td.left pre,
+table td.right pre,
+table td.results pre{
+	background-color: #72f9b6 !important;
+	/*width: 33%;*/
+	/*height: 200px;*/
 }
