@@ -56,9 +56,11 @@
             if (idSelector) {
                 name += '#' + idSelector;
             }
-            else if (classSelector) {
-                name += '.' + classSelector;
-            }
+
+            //Not a good idea for now, because classes are very dynamic and dependant on the styles.
+            // else if (classSelector) {
+            //     name += '.' + classSelector;
+            // }
 
             return name;
         }
