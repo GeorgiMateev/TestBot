@@ -17,3 +17,37 @@ div.tests-result[data-avalable="true"] {
 .loading-indicator {
   display: none;
 }
+
+
+/* results and warnings section */
+table {
+	table-layout: fixed;
+	width: 100%;
+}
+td {
+	width: 33%;
+	padding: 3px 4px;
+	border: 1px solid transparent;
+	vertical-align: top;
+	font: 1em monospace;
+	text-align: left;
+	white-space: pre-wrap;
+}
+[contentEditable] {
+	background: #F9F9F9;
+	border-color: #BBB #D9D9D9 #DDD;
+	border-radius: 4px;
+	-webkit-user-modify: read-write-plaintext-only;
+	outline: none;
+}
+[contentEditable]:focus {
+	background: #FFF;
+	border-color: #6699cc;
+	box-shadow: 0 0 4px #2175c9;
+}
+
+@-moz-document url-prefix() {
+	body {
+		height: 99%; /* Hide scroll bar in Firefox */
+	}
+}
