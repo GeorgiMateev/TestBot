@@ -5,27 +5,16 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"></link>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
   <script src="http://code.highcharts.com/highcharts.js"></script>
   <script src="http://code.highcharts.com/modules/exporting.js"></script>
-
   <script src="chart.js"></script>
   <script src="diff.js"></script>
-
-  <!--<link rel="stylesheet" href="styles/default.css">
-  <script src="highlight.pack.js"></script>-->
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/default.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
-
-
   <script src="results.js"></script>
-
-  
   <link rel="stylesheet" href="style.css"></link>
-
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
   <script type="text/javascript" src="app.js"></script>
 </head>
 <body>
@@ -37,22 +26,9 @@
   <div class="row">
     <div class="col-sm-12">
       <h3>Schedule test</h3>
-      <button id="start-testing-button" type="button" class="start-testing btn btn-success">Start testing!</button>
+      <input class="form-control input-lg" id="exampleInputEmail1" placeholder="Enter url">
+      <button id="start-testing-button" type="button" class="start-testing btn-lg btn btn-success">Start testing</button>
       <img class="loading-indicator" src="loading.gif"></img>
-    </div>
-    <div class="col-sm-12 tests-result" data-available="none">
-      <h3>Test results</h3>
-    </div>
-    <div class="col-sm-6 tests-result" data-available="none">
-      <h3>Expected</h3>
-      <ol>
-        <li>
-          <xmp><ul><li>Content1</li><li>Content2</li></ul></xmp>
-        </li>
-        <li>
-          <xmp><ul><li>Content1</li><li>Content2</li></ul></xmp>
-        </li>
-      </ol>
     </div>
     <div class="col-sm-12" th:if="${runs != null}">
       <h3>Previous runs</h3>
