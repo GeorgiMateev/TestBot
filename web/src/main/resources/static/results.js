@@ -7,7 +7,6 @@ var drowResults = function drowResults(hardcodedDomParts) {
 		}
 	}
 	for (var i = 0; i < hardcodedDomParts.length; i++) {
-		debugger;
 		resultsPanel.append('<table id="warnings-table-'+i+'">'+
 		  '<tr>'+
             '<td>Expected result: </td>'+
@@ -29,14 +28,20 @@ var drowResults = function drowResults(hardcodedDomParts) {
 	        	'<span style="width: 50%;">'+hardcodedDomParts[i][0]+'</span>'+
 	        	'<span>'+hardcodedDomParts[i][1]+'</span>'+
 				'</div>'+
-        '</div>');
+        '</div>'+
+        '<div class="row" style="height: 30px">'+
+		    '<div class="col-sm-6 col-lg-4">'+
+		      '<h2 class="h4">This is new feature</h2>'+
+		      '<p style="margin-left: auto; margin-right: right;">'+
+		        '<input class="switch-state" type="checkbox" data-on-text="Yes" data-off-text="No" checked>'+
+		      '</p>'+
+		    '</div>'+
+		 '</div>');
         $('#warnings-table-'+i).find('.left pre code').text(hardcodedDomParts[i][0]).html();
         $('#warnings-table-'+i).find('.right pre .right').text(hardcodedDomParts[i][1]).html();
         
 		$('#warnings-table-'+i).next().click(callback(i));
-	}
-	for (var i = 0; i < hardcodedDomParts.length; i++) {
-        
+		$(".switch-state").bootstrapSwitch();
 	}
 	// Make diffs and put them in the third
 	var warningTables = $('#results-panel table');
