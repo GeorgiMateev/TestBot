@@ -30,20 +30,6 @@
       <button id="start-testing-button" type="button" class="start-testing btn-lg btn btn-success">Start testing</button>
       <img class="loading-indicator" src="loading.gif"></img>
     </div>
-    <div class="col-sm-12" th:if="${runs != null}">
-      <h3>Previous runs</h3>
-      <div class="previous-runs" th:each="run : ${runs}">
-        <label th:text="${run.timeStamp}"></label>
-        <ul>
-          <li th:each="item : *{run.issues}">
-            <label>Expected</label>
-            <code th:text="${item.expectedParentHtml}"></code>
-            <label>Was</label>
-            <code th:text="${item.actualParentHtml}"></code>
-          </li>
-        </ul>
-      </div>
-    </div>
     <div class="col-sm-12">
       <h3>Statistics</h3>        
       <div id="chart-container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
