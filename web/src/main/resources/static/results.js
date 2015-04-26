@@ -2,12 +2,11 @@ var drowResults = function drowResults(hardcodedDomParts) {
 	var resultsPanel = $('#results-panel');
 	var callback = function(i) {
 		return function  () {
-	    	debugger;
 	    	$('#warnings-table-'+i+' tr.show-ui').show();
 		}
 	}
+	resultsPanel.children().remove();
 	for (var i = 0; i < hardcodedDomParts.length; i++) {
-		debugger;
 		resultsPanel.append('<table id="warnings-table-'+i+'">'+
 		  '<tr>'+
             '<td>Expected result: </td>'+
