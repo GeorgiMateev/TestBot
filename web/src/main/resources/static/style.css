@@ -18,6 +18,11 @@ div.tests-result[data-avalable="true"] {
   display: none;
   width: 40px;
   height: 40px;
+  margin-top: 20px;
+}
+
+.start-testing {
+	margin-top: 20px;
 }
 
 
