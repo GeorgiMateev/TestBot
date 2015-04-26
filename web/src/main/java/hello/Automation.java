@@ -2,6 +2,7 @@ package hello;
 
 import java.io.File;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -43,6 +44,13 @@ public class Automation {
         driver.get("http://localhost:8081");
         
         ((JavascriptExecutor)driver).executeScript("window.focus();");
+        
+        try {
+			TimeUnit.SECONDS.sleep(3);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         
         for (DBObject event : events) {
         	BasicDBList userEvents = (BasicDBList)event.get("events");
