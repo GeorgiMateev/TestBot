@@ -7,8 +7,8 @@ $(function () {
 	});
 
 	var hardcodedDomParts = [
-		['<div>dio<button>makq</button></dio>', '<div><button>makq</button>udri</dio>'],
-		['<div><span>kor</span></div>', '<div><span>hoi</span></div>'],
+		['<div>io<button>make</button></dio>', '<div><button>make</button>uuu</dio>'],
+		['<div><span>core</span></div>', '<div><span>ui</span></div>'],
 		['<div><span>ui</span></div>', '<div><span>ui</span>']
 	];
 
@@ -17,8 +17,8 @@ $(function () {
 		for (var i = 0; i < hardcodedDomParts.length; i++) {
 			resultsPanel.append('<table id="warnings-table-'+i+'">'+
 	          '<tr>'+
-	            '<td height=100 contenteditable="true" class="left"><pre><code class="html left"></code></pre></td>'+
-	            '<td height=100 contenteditable="true" class="right"><pre><code class="html right"></code></pre></td>'+
+	            '<td height=100 contenteditable="true" class=""><pre><code class="html"></code></pre></td>'+
+	            '<td height=100 contenteditable="true" class="right"><pre><code class="hljs html right"></code></pre></td>'+
 	            '<td height=100 contenteditable="true" class="result"></td>'+
 	          '</tr>'+
 	        '</table><button type="button" class="btn btn-info check-code-button">Check</button>'+
@@ -28,8 +28,8 @@ $(function () {
 		        	'<span>'+hardcodedDomParts[i][1]+'</span>'+
   				'</div>'+
 	        '</div>');
-	        $('#warnings-table-'+i).find('.left .left').text(hardcodedDomParts[i][0]).html();
-	        $('#warnings-table-'+i).find('.right .right').text(hardcodedDomParts[i][1]).html();
+	        $('#warnings-table-'+i).find('pre code').text(hardcodedDomParts[i][0]).html();
+	        $('#warnings-table-'+i).find('.right pre .right').text(hardcodedDomParts[i][1]).html();
 	        $('#warnings-table-'+i).next().click(function() {
 	        	$(this).next().show();
 	        })
@@ -37,10 +37,8 @@ $(function () {
 		// Make diffs and put them in the third
 		var warningTables = $('#results-panel table');
 		warningTables.each(function(index, warningTable) {
-			var leftText = $(warningTable).find('.left .left').text(),
-				rightText = $(warningTable).find('.right .right').text();
-			console.log(leftText);
-			console.log(rightText);
+			var leftText = $(warningTable).find('pre code').text(),
+				rightText = $(warningTable).find('.right pre .right').text();
 			var diff = JsDiff['diffChars'](leftText, rightText);
 			var result = $(warningTable).find('.result')[0];
 			var fragment = document.createDocumentFragment();
