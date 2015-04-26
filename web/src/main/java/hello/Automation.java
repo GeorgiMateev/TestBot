@@ -48,9 +48,24 @@ public class Automation {
         	for (int i = 0; i < userEvents.size(); i++) {
         		DBObject userEvent = (DBObject) userEvents.get(i);
         		
-        		WebElement element = driver.findElement(By.cssSelector((String)userEvent.get("targetSelector")));
-        		
+        		String targetSelector = (String)userEvent.get("targetSelector");
         		String eventType = (String)userEvent.get("type");
+        		
+        		WebElement element = null;
+        		try {
+        			element =(new WebDriverWait(driver, 2))
+        					.until(ExpectedConditions.presenceOfElementLocated((By.cssSelector(targetSelector))));
+        		}
+        		catch(TimeoutException e){
+        			int lastDelimeterIndex = targetSelector.lastIndexOf(">");
+        			String parentSelector = targetSelector.substring(0, lastDelimeterIndex);
+        			WebElement parentElement = driver.findElement(By.cssSelector(parentSelector));
+        			String expectedHtml = (String)userEvent.get("surroundingHtml");
+        			String html = parentElement.getAttribute("outerHTML");
+        			db.saveErrorReport(runId, targetSelector, expectedHtml, html, eventType, (long)userEvent.get("timeStamp"));
+        		}
+        		
+        		if(element == null) continue;        		
         		
         		String tagName =  element.getTagName();
         		String type = element.getAttribute("type");
@@ -81,7 +96,8 @@ public class Automation {
         		
         		WebElement child;
         		try {
-        			child = (new WebDriverWait(driver, 5)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(childSelector)));
+        			child = (new WebDriverWait(driver, 2))
+        					.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(childSelector)));
         		}
         		catch(TimeoutException e){
         			String targetSelector = (String)mutation.get("targetSelector");
