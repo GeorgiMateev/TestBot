@@ -27,4 +27,9 @@ public class GreetingController {
     	Automation a = new Automation();
     	a.start();
     }
+
+    @RequestMapping(value = "/runs", method = RequestMethod.GET)
+    public List<RunResult> runs() {
+        return db.getResults();
+    }
 }
