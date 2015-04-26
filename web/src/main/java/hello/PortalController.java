@@ -22,18 +22,4 @@ public class PortalController {
         model.addAttribute("runs", runs);
         return "portal";
     }
-
-    private void initializeDb() {
-        Object runId  = db.createRun(11111111);
-        db.saveErrorReport(runId, "<selector/>", "<expected />", "<was />", "type", 111111111);
-        db.saveErrorReport(runId, "<selector/>", "<expected />", "<was />", "type", 111111112);
-        db.saveErrorReport(runId, "<selector/>", "<expected />", "<was />", "type", 111111113);
-        db.saveErrorReport(runId, "<selector/>", "<expected />", "<was />", "type", 111111114);
-
-        Object runId2  = db.createRun(11111112);
-        db.saveErrorReport(runId2, "<selector/>", "<expected />", "<was />", "type", 111111111);
-        db.saveErrorReport(runId2, "<selector/>", "<expected />", "<was />", "type", 111111112);
-        db.saveErrorReport(runId2, "<selector/>", "<expected />", "<was />", "type", 111111113);
-        db.saveErrorReport(runId2, "<selector/>", "<expected />", "<was />", "type", 111111114);
-    }
 }

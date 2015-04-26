@@ -25,7 +25,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 public class Automation {
-	public void start() {
+	public Object start() {
 //		File pathToBinary = new File("D:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
 //		FirefoxBinary ffBinary = new FirefoxBinary(pathToBinary);
 //		FirefoxProfile firefoxProfile = new FirefoxProfile();
@@ -125,5 +125,7 @@ public class Automation {
         
         //Close the browser
         driver.quit();
+
+		return runId;
 	}
 }

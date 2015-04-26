@@ -1,20 +1,4 @@
-$(function () {
-
-	$(document).ready(function() {
-	  $('pre code').each(function(i, block) {
-	    hljs.highlightBlock(block);
-	  });
-	});
-
-
-});
-
 var drowResults = function drowResults(hardcodedDomParts) {
-	var hardcodedDomParts = [
-		['<div>\n\ti\n\t<button>make</button>\n</dio>', '<div><button>make</button>uuu</dio>'],
-		['<div><span>core</span></div>', '<div><span>ui</span></div>'],
-		['<div><span>ui</span></div>', '<div><span>ui</span>']
-	];
 	var resultsPanel = $('#results-panel');
 	var callback = function(i) {
 		return function  () {

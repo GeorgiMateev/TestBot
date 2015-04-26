@@ -12,7 +12,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.ParallelScanOptions;
 import com.mongodb.ServerAddress;
-
+import org.bson.types.ObjectId;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +104,19 @@ class Database {
 		return results;
 	}
 
+	public RunResult getResultById(Object id) {
+		BasicDBObject query = new BasicDBObject();
+		query.put("_id", new ObjectId(id.toString()));
+		DBObject dbResult = this.resultsCollection.findOne(query);
+
+		RunResult result = new RunResult();
+		BasicDBList issues = (BasicDBList) dbResult.get("issues");
+		result.setIssues(this.extractIssues(issues));
+		result.setTimeStamp(Long.parseLong(dbResult.get("timeStamp").toString()));
+
+		return result;
+	}
+
 	private ArrayList<IssueDiff> extractIssues(BasicDBList issues) {
 		ArrayList<IssueDiff> issueDiffs = new ArrayList<>();
 		for (Object issue : issues) {
@@ -119,7 +132,7 @@ class Database {
 
 		return issueDiffs;
 	}
-	
+
 	private DB db;
 	private DBCollection eventsCollection;
 	private DBCollection resultsCollection;
