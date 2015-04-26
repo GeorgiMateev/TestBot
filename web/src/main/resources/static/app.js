@@ -29,6 +29,19 @@
     createChart(numberOfRuns, warningsByRun)
   };
 
+  var fulfillPreviousRuns = function () {
+    var runsPromise = $.ajax('http://localhost:8188/runs')
+
+    var displayRun = function(run) {
+      // TODO: I need implementation - Muri help me
+    };
+
+    runsPromise
+    .then(function (runs) {
+      runs.forEach(displayRun);
+    })
+  };
+
   $(document).ready(function() {
     var testingButton = $('button.start-testing');
     testingButton.click(startTesting);

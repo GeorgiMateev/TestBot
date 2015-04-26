@@ -18,8 +18,6 @@ public class PortalController {
 
     @RequestMapping("/portal")
     public String greeting(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
-        ArrayList<IssueDiff> list = new ArrayList<>();
-
         List<RunResult> runs = db.getResults();
         model.addAttribute("runs", runs);
         return "portal";
