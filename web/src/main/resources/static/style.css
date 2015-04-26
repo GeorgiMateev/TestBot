@@ -16,6 +16,8 @@ div.tests-result[data-avalable="true"] {
 
 .loading-indicator {
   display: none;
+  width: 40px;
+  height: 40px;
 }
 
 
